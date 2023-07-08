@@ -8,6 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cl.ejercicio5modulo5.databinding.FragmentListBinding;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentList#newInstance} factory method to
@@ -59,6 +64,18 @@ public class FragmentList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list, container, false);
+        FragmentListBinding binding = FragmentListBinding.inflate(getActivity().getLayoutInflater());
+        AdapterWords adapter = new AdapterWords();
+        adapter.setData(getData());
+
+        binding.RecyclerView.setAdapter(adapter);
+        return binding.getRoot();
+    }
+    public List<String> getData(){
+        List<String> data = new ArrayList<String>();
+        for (int i =0; i <20;i++){
+            data.add("words"+ i);
+        }
+        return data;
     }
 }
