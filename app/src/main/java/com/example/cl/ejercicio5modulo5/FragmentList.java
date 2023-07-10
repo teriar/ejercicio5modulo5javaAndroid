@@ -24,6 +24,9 @@ public class FragmentList extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+     private List<String> data = new ArrayList<String>();
+     private FragmentListBinding binding;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -60,19 +63,42 @@ public class FragmentList extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FragmentListBinding binding = FragmentListBinding.inflate(getActivity().getLayoutInflater());
+         binding = FragmentListBinding.inflate(getActivity().getLayoutInflater());
         AdapterWords adapter = new AdapterWords();
-        adapter.setData(getData());
+        data= getData();
+        adapter.setData(data);
 
         binding.RecyclerView.setAdapter(adapter);
+        
+        initListener();
         return binding.getRoot();
     }
+
+    private void initListener() {
+
+
+        binding.floatingActionButton.setOnClickListener(v -> {
+           data.add("words "+  data.size());
+
+            binding.RecyclerView.getAdapter().notifyItemInserted(data.size());
+
+            binding.RecyclerView.smoothScrollToPosition(data.size());
+
+        });
+
+
+
+
+
+    }
+
     public List<String> getData(){
-        List<String> data = new ArrayList<String>();
+
         for (int i =0; i <20;i++){
             data.add("words"+ i);
         }
